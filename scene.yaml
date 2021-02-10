@@ -294,12 +294,12 @@ layers:
                     lines:
                         color: [1.000,1.000,1.000]
                         width: 1px
-            minor_road:
-                filter: { kind: minor_road }
-                draw:
-                    lines:
-                        color: [1.000,1.000,1.000]
-                        width: 1px
+#            minor_road:
+#                filter: { kind: minor_road }
+#                draw:
+#                    lines:
+#                        color: [1.000,1.000,1.000]
+#                        width: 1px
             ferry:
                 filter: { kind: ferry }
                 draw:
@@ -319,7 +319,7 @@ layers:
                     lines:
                         style: roads-glow
                         color: [1.000,1.000,1.000]
-                        width: [[8,4px],[11,9px]]
+                        width: [[8,2px],[11,4.5px]]
 
             highway-z11:
                 filter:
@@ -599,164 +599,165 @@ layers:
         major_road:
             filter: { kind: major_road, $zoom: { min: 8 } }
             # default style
-            draw:
-                lines:
-                    color: [1.000,1.000,1.000]
-                    width: [[13, 1px], [14, 1px]]
+#            draw:
+#                lines:
+#                    color: [1.000,1.000,1.000]
+#                    width: [[13, 1px], [14, 1px]]
             trunk_primary:
                 filter: { kind_detail: [trunk, primary] }
                 draw:
                     lines:
                         color: [1.000,1.000,1.000]
-                        width: [[8, 0.6px], [9, 0.75px], [10, 1.5px], [13, 2.5px], [14, 4.5px], [15, 5.5px], [16, 7.0px], [19, 14m]]
-                early:
-                    filter: { $zoom: { max: 16 } }
-                    draw:
-                        lines:
-                            order: 352
-                            outline:
-                                order: function() { return feature.sort_rank + 2; }
-                    primary:
-                        filter: { kind: [primary] }
-                        draw:
-                            lines:
-                                outline:
-                                    order: function() { return feature.sort_rank + 1; }
-                routes:
-                    filter: { ref: true }
-                    draw:
-                        lines:
-                            color: [1.000,1.000,1.000]
-                            width: [[8, 1.0px], [9, 1.5px], [10, 2.0px], [14, 3.5px], [15, 4.5px], [16, 6.0px], [17, 12m]]
-                    early:
-                        filter: { $zoom: { max: 16 } }
-                        draw:
-                            lines:
-                                order: function() { return feature.sort_rank + 2; }
-                                outline:
-                                    order: 353
-                    tunnel:
-                        filter: { is_tunnel: true, $zoom: { min: 13 } }
-                        draw:
-                            lines:
-                                color: [1.000,1.000,1.000]
-            link:
-                filter: { is_link: true } # on- and off-ramps, etc
-                draw:
-                    lines:
-                        color: [1.000,1.000,1.000]
-                        width: 0.5px
-            tunnel:
-                filter: { is_tunnel: true, $zoom: { min: 13 } }
-                draw:
-                    lines:
-                        color: [1.000,1.000,1.000]
-            secondary:
-                filter: { kind_detail: secondary }
-                draw:
-                    lines:
-                        color: [1.000,1.000,1.000]
-                        width: [[11, 1.0px], [12, 1.0px], [13, 2.0px], [14, 3.5px], [15, 4.5px], [16, 7.0px], [19, 16m]]
-                early:
-                    filter: { $zoom: { max: 16 } }
-                    draw:
-                        lines:
-                            order: 352
-                routes:
-                    filter: { ref: true, $zoom: { min: 12 } }
-                    draw:
-                        lines:
-                            color: [1.000,1.000,1.000]
-                            width: 0.5px
-                    early:
-                        filter: { $zoom: { max: 15 } }
-                        draw:
-                            lines:
-                                order: function() { return feature.sort_rank + 2; }
-                                outline:
-                                    order: 353
-                    tunnel:
-                        filter: {is_tunnel: true, $zoom: { min: 13 } }
-                        draw:
-                            lines:
-                                color: [1.000,1.000,1.000]
-            tertiary:
-                filter: { kind_detail: [tertiary, tertiary_link] }
-                draw:
-                    lines:
-                        color: [1.000,1.000,1.000]
-                        width: [[11, 0.5px], [12, .75px], [14, 2.5px], [15, 4.0px], [16, 6.5px], [17, 7.5px], [19, 14m]]
-                early:
-                    filter: { $zoom: { max: 15 } }
-                    draw:
-                        lines:
-                            order: 352
-                routes:
-                    filter: { ref: true, $zoom: { min: 12 } }
-                    draw:
-                        lines:
-                            color: [1.000,1.000,1.000]
-                            width: 0.5px
-                    early:
-                        filter: { $zoom: { max: 15 } }
-                        draw:
-                            lines:
-                                order: function() { return feature.sort_rank + 3; }
-                                outline:
-                                    order: 353
-                    tunnel:
-                        filter: { is_tunnel: true, $zoom: { min: 13 } }
-                        draw:
-                            lines:
-                                color: [1.000,1.000,1.000]
-                link:
-                    filter: { is_link: true } # on- and off-ramps, etc
-                    draw:
-                        lines:
-                            color: [1.000,1.000,1.000]
-                            width: 0.5px
-
-        minor_road:
-            filter: { kind: minor_road, not: { kind_detail: service }, $zoom: { min: 8 } }
-            draw:
-                lines:
-                    color: [1.000,1.000,1.000]
-                    width: [[11, 0.5px], [12, 0.75px], [13, 1.0px], [14, 1.2px], [15, 2.5px], [16, 8m]]
-            early:
-                filter: { $zoom: { max: 16 } }
-                draw:
-                    lines:
-                        order: 350
-            round:
-                filter: { $zoom: { min: 17 } }
-                draw:
-                    lines:
-                        cap: round
-                        join: round
-
-            tunnel:
-                filter: {is_tunnel: true, $zoom: { min: 13 } }
-                draw:
-                    lines:
-                        color: [0.000,0.000,0.000]
-            minor_road_bridge:
-                filter: { is_bridge: true }
-                draw:
-                    lines:
-                        cap: round
-
-        path:
-            filter:
-                all:
-                    - $zoom: { min: 16 }
-                    - kind: [path, portage_way]
-                not:
-                    - kind_detail: [steps, track, pier]
-            draw:
-                lines:
-                    # style: dashed-lines
-                    color: [1.000,1.000,1.000]
-                    width: [[14, 0.5px], [15, 1.5px], [17, 3m]]
+                        width: [[8, 0.6px], [9, 0.25px], [10, 0.5px], [13, 1.5px], [14, 2.5px], [15, 2.5px], [16, 2.0px], [19, 14m]]
+#                early:
+#                    filter: { $zoom: { max: 16 } }
+#                    draw:
+#                        lines:
+#                            order: 352
+#                            outline:
+#                                order: function() { return feature.sort_rank + 2; }
+#                    primary:
+#                        filter: { kind: [primary] }
+#                        draw:
+#                            lines:
+#                                outline:
+#                                    order: function() { return feature.sort_rank + 1; }
+#                routes:
+#                    filter: { ref: true }
+#                    draw:
+#                        lines:
+#                            color: [1.000,1.000,1.000]
+#                            width: [[8, 1.0px], [9, 1.5px], [10, 2.0px], [14, 3.5px], [15, 4.5px], [16, 6.0px], [17, 12m]]
+#                    early:
+#                        filter: { $zoom: { max: 16 } }
+#                        draw:
+#                            lines:
+#                                order: function() { return feature.sort_rank + 2; }
+#                                outline:
+#                                    order: 353
+#                    tunnel:
+#                        filter: { is_tunnel: true, $zoom: { min: 13 } }
+#                        draw:
+#                            lines:
+#                                color: [1.000,1.000,1.000]
+#            link:
+#                filter: { is_link: true } # on- and off-ramps, etc
+#                draw:
+#                    lines:
+#                        color: [1.000,1.000,1.000]
+#                        width: 0.5px
+#            tunnel:
+#                filter: { is_tunnel: true, $zoom: { min: 13 } }
+#                draw:
+#                    lines:
+#                        color: [1.000,1.000,1.000]
+                        #
+#            secondary:
+#                filter: { kind_detail: secondary }
+#                draw:
+#                    lines:
+#                        color: [1.000,1.000,1.000]
+#                        width: [[11, 1.0px], [12, 1.0px], [13, 2.0px], [14, 3.5px], [15, 4.5px], [16, 7.0px], [19, 16m]]
+#                early:
+#                    filter: { $zoom: { max: 16 } }
+#                    draw:
+#                        lines:
+#                            order: 352
+#                routes:
+#                    filter: { ref: true, $zoom: { min: 12 } }
+#                    draw:
+#                        lines:
+#                            color: [1.000,1.000,1.000]
+#                            width: 0.5px
+#                    early:
+#                        filter: { $zoom: { max: 15 } }
+#                        draw:
+#                            lines:
+#                                order: function() { return feature.sort_rank + 2; }
+#                                outline:
+#                                    order: 353
+#                    tunnel:
+#                        filter: {is_tunnel: true, $zoom: { min: 13 } }
+#                        draw:
+#                            lines:
+#                                color: [1.000,1.000,1.000]
+#            tertiary:
+#                filter: { kind_detail: [tertiary, tertiary_link] }
+#                draw:
+#                    lines:
+#                        color: [1.000,1.000,1.000]
+#                        width: [[11, 0.5px], [12, .75px], [14, 2.5px], [15, 4.0px], [16, 6.5px], [17, 7.5px], [19, 14m]]
+#                early:
+#                    filter: { $zoom: { max: 15 } }
+#                    draw:
+#                        lines:
+#                            order: 352
+#                routes:
+#                    filter: { ref: true, $zoom: { min: 12 } }
+#                    draw:
+#                        lines:
+#                            color: [1.000,1.000,1.000]
+#                            width: 0.5px
+#                    early:
+#                        filter: { $zoom: { max: 15 } }
+#                        draw:
+#                            lines:
+#                                order: function() { return feature.sort_rank + 3; }
+#                                outline:
+#                                    order: 353
+#                    tunnel:
+#                        filter: { is_tunnel: true, $zoom: { min: 13 } }
+#                        draw:
+#                            lines:
+#                                color: [1.000,1.000,1.000]
+#                link:
+#                    filter: { is_link: true } # on- and off-ramps, etc
+#                    draw:
+#                        lines:
+#                            color: [1.000,1.000,1.000]
+#                            width: 0.5px
+#
+#        minor_road:
+#            filter: { kind: minor_road, not: { kind_detail: service }, $zoom: { min: 8 } }
+#            draw:
+#                lines:
+#                    color: [1.000,1.000,1.000]
+#                    width: [[11, 0.5px], [12, 0.75px], [13, 1.0px], [14, 1.2px], [15, 2.5px], [16, 8m]]
+#            early:
+#                filter: { $zoom: { max: 16 } }
+#                draw:
+#                    lines:
+#                        order: 350
+#            round:
+#                filter: { $zoom: { min: 17 } }
+#                draw:
+#                    lines:
+#                        cap: round
+#                        join: round
+#
+#            tunnel:
+#                filter: {is_tunnel: true, $zoom: { min: 13 } }
+#                draw:
+#                    lines:
+#                        color: [0.000,0.000,0.000]
+#            minor_road_bridge:
+#                filter: { is_bridge: true }
+#                draw:
+#                    lines:
+#                        cap: round
+#
+#        path:
+#            filter:
+#                all:
+#                    - $zoom: { min: 16 }
+#                    - kind: [path, portage_way]
+#                not:
+#                    - kind_detail: [steps, track, pier]
+#            draw:
+#                lines:
+#                    # style: dashed-lines
+#                    color: [1.000,1.000,1.000]
+#                    width: [[14, 0.5px], [15, 1.5px], [17, 3m]]
 
 
         ##### ROADS WHITE
@@ -939,12 +940,16 @@ layers:
             #     visible: false
             #     order: global.order_add_1
             #     color: [0.000,0.000,0.000]
-
+            lines:
+                width: [[13,.15px],[15,.5px],[17,1.5px],[19,3px]]
+                color: white
+                order: global.order_add_1
         footprints:
             draw:
                 polygons:
                     visible: true
-                    style: building-dots
+#                    style: building-dash-very-small
+                    style: zig-zag
                 # lines:
                 #     visible: true
                 #     width: 1px
@@ -1001,11 +1006,17 @@ styles:
                 u_textures:
 #                    - images/earth-dots1.jpg
                     # OR
-                    # - images/earth-dots2.jpg
+#                    - images/earth-dots2.jpg
                     # - images/earth-dots5.jpg
 #                    - images/earth-dots8.jpg
-                    - images/thatch.jpg
-                    - images/thatch1.jpg
+#                    - images/playa.jpg
+#                     - images/thatch.jpg
+                     - images/thatch1.jpg
+#                    - images/whorls.jpg
+#                    - images/earth-dots8.jpg
+#                    - images/thatch3.jpg
+#                    - images/thatch_light.jpg
+                     - images/thatch_dark.jpg
                 u_zoom_fade: [12.5, 13] # zooms to start/stop cross-fade
                 u_scale: 1.00 # number of times to repeat texture in a tile
                 # u_light: [-0.5, 0.5, -0.5] # lights are flipped to match sat hillshade
@@ -1167,7 +1178,34 @@ styles:
             uniforms:
                 u_customtexture: images/building-dots4.jpg
                 u_scale: 0.85
-
+    building-dash-very-small:
+        base: polygons
+        mix: texture
+        shaders:
+            uniforms:
+                u_customtexture: images/building-dash-very-small.jpg
+                u_scale: 0.85  
+    building-dash-small:
+        base: polygons
+        mix: texture
+        shaders:
+            uniforms:
+                u_customtexture: images/building-dash-small.jpg
+                u_scale: 0.85               
+    building-dash-big:
+        base: polygons
+        mix: texture
+        shaders:
+            uniforms:
+                u_customtexture: images/building-dash-big.jpg
+                u_scale: 0.85     
+    zig-zag:
+        base: polygons
+        mix: texture
+        shaders:
+            uniforms:
+                u_customtexture: images/zig-zag.jpg
+                u_scale: 0.85 
     conservation:
         base: polygons
         mix: texture

@@ -75,7 +75,15 @@
         }
         
         map.setView(map_start_location.slice(0, 2), map_start_location[2]);
-
+        map.on('keypress', function() { console.log('pressed!'); });
+        
+        map.on("keypress", function(e) {
+    		var keyPressed = e.originalEvent.key;
+    		if (keyPressed == "z") {
+        		map.flyTo([37.74300,-122.41500],17,{animate:true, duration:45})
+    	}
+});
+		
 
 
     </script>
