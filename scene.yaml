@@ -20,7 +20,7 @@ global:
 
     # Sign up for a Mapzen API key to enjoy higher rate limits
     # https://mapzen.com/documentation/overview/#developer-accounts-and-api-keys
-    sdk_api_key: 'DpCrhQqsR2igQPEINRTfcw'     # set this value to your Mapzen API key
+    sdk_api_key: '3eqm2_bfTNGZ85ar20fVyA'     # set this value to your Mapzen API key
 
     scale: 5.
 
@@ -138,14 +138,15 @@ layers:
         draw:
             polygons:
 #                style: water-dots
-                style: water-waves
+                style: water-bubbles
+
                 order: global.feature_order
                 color: [1,1,1]
 
         lakes:
             filter:
                 all:
-                    - kind: [ocean, lake, water, riverbank, reservoir, swimming_pool]
+                    - kind: [lake, water, riverbank, reservoir, swimming_pool]
                 # WARNING: any area filters here must match the area filters in the water-boundaries-not_ocean layer
                 any:
                     # limit show smaller landuse areas to higher zooms
@@ -167,7 +168,7 @@ layers:
                     - { $zoom: { min: 15 } }
             draw:
                 polygons:
-#                    style: water-dots
+#                    style: water-bubbles
                     style: water-waves
                 lines:
                     width: 3px
@@ -800,6 +801,8 @@ layers:
             polygons:
                 order: global.feature_order
                 visible: false
+#                color: [0.000,1.000,0.000]
+
         # tier1:
         national_park:
             filter:
@@ -1071,6 +1074,14 @@ styles:
             uniforms:
                 u_customtexture: images/waves2.jpg
                 u_scale: 0.6
+    water-bubbles:
+        mix: texture
+        base: polygons
+        shaders:
+            uniforms:
+                u_customtexture: images/flowers_rocks.jpg
+                u_scale: 0.6
+                
                 
     water-boundaries-animated:
         base: lines
