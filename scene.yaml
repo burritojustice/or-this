@@ -139,9 +139,18 @@ layers:
             polygons:
 #                style: water-dots
                 style: water-bubbles
+#                style: finger-waves
 
                 order: global.feature_order
                 color: [1,1,1]
+        waves:
+            filter: { $zoom: { min: 12}}
+            draw:
+                polygons:
+                    style: finger-waves
+                    order: global.feature_order
+                    color: [1,1,1]
+            
 
         lakes:
             filter:
@@ -193,27 +202,39 @@ layers:
                     color: [0,0,0]
 
         boundaries:
+            draw:
+                lines:
+#                    style: water-boundaries-animated
+                    style: coastline-glow
+                    order: global.feature_order
+                    width: [[4,2px],[8,3px],[12,4px],[18,6px]]
+#                    color: [0.600,0.600,0.600]
+                    color: [.8,.8,1]
+#                    color: [0,0,1]
+
+
+                    join: round
             filter: { boundary: true, kind: ocean }
             # don't animate early, save the fan, save the planet!
-            early:
-                filter: { $zoom: { max: 16 } }
-                draw:
-                    lines:
+#            early:
+#                filter: { $zoom: { max: 16 } }
+#                draw:
+#                    lines:
 #                        style: coastline-glow
-                        order: global.feature_order
-#                        width: 1px
-                        width: [[4,2px],[11,2.5px],[14,3px],[16,4px]]
-                        color: [0,0,0]
-                        join: round
-            animated:
-                filter: { $zoom: { min: 16 } }
-                draw:
-                    lines:
-                        style: water-boundaries-animated
-                        order: global.feature_order
-                        width: [[16,21px],[18,30px],[20,36]]
-                        color: [0.600,0.600,0.600]
-                        join: round
+#                        order: global.feature_order
+##                        width: 1px
+##                        width: [[4,2px],[11,2.5px],[14,3px],[16,4px]]
+##                        color: [0,0,0]
+#                        join: round
+#            animated:
+#                filter: { $zoom: { min: 16 } }
+#                draw:
+#                    lines:
+#                        style: water-boundaries-animated
+#                        order: global.feature_order
+#                        width: [[16,21px],[18,30px],[20,36]]
+#                        color: [0.600,0.600,0.600]
+#                        join: round
 
         boundaries-not_ocean:
             filter:
@@ -245,8 +266,10 @@ layers:
                     order: global.feature_order
 #                    color: [1.000,1.000,1.000]
                     color: [0,0,0]
-                    width: [[8,1px],[13,1px],[15,2px],[20,3px]]
+                    width: [[8,2px],[13,3px],[15,4px],[20,5px]]
                     join: round
+#                    style: coastline-glow
+                    
 
             boundaries-not_ocean-riverbank:
                 # river boundaries like the thames in london, la seine in paris
@@ -652,12 +675,12 @@ layers:
 #                    lines:
 #                        color: [1.000,1.000,1.000]
                         #
-#            secondary:
-#                filter: { kind_detail: secondary }
-#                draw:
-#                    lines:
-#                        color: [1.000,1.000,1.000]
-#                        width: [[11, 1.0px], [12, 1.0px], [13, 2.0px], [14, 3.5px], [15, 4.5px], [16, 7.0px], [19, 16m]]
+            secondary:
+                filter: { kind_detail: secondary }
+                draw:
+                    lines:
+                        color: [1.000,1.000,1.000]
+                        width: [[11, 1.0px], [12, 1.0px], [13, 2.0px], [14, 3.5px], [15, 4.5px], [16, 7.0px], [19, 16m]]
 #                early:
 #                    filter: { $zoom: { max: 16 } }
 #                    draw:
@@ -927,10 +950,14 @@ layers:
         #             visible: true
 
     buildings:
+        filter: 
+            all: 
+                - $zoom: { min: 13 }
+            not: { location: underground } 
+
         data: { source: mapzen, layer: buildings }
         enabled: true
-        filter:
-            not: { location: underground }
+            
         draw:
             polygons:
                 visible: false
@@ -940,16 +967,18 @@ layers:
             #     visible: false
             #     order: global.order_add_1
             #     color: [0.000,0.000,0.000]
-            lines:
-                width: [[13,.15px],[15,.5px],[17,1.5px],[19,3px]]
-                color: white
-                order: global.order_add_1
+#            lines:
+#                width: [[13,.15px],[15,.5px],[17,1.5px],[19,3px]]
+#                color: white
+#                order: global.order_add_1
         footprints:
             draw:
                 polygons:
                     visible: true
 #                    style: building-dash-very-small
-                    style: zig-zag
+#                   style: zig-zag
+#                    style: texture-zooms-multi
+                    style: color-flowers
                 # lines:
                 #     visible: true
                 #     width: 1px
@@ -1085,14 +1114,27 @@ styles:
             uniforms:
                 u_customtexture: images/waves2.jpg
                 u_scale: 0.6
+                
     water-bubbles:
+        mix: texture
+        base: polygons
+#        raster: custom
+        shaders:
+            uniforms:
+                u_customtexture: images/flowers_rocks.jpg
+                u_scale: 0.5
+
+
+                
+    finger-waves:
         mix: texture
         base: polygons
         shaders:
             uniforms:
-                u_customtexture: images/flowers_rocks.jpg
-                u_scale: 0.6
-                
+                u_customtexture: images/finger-waves.jpg
+                u_scale: 1.               
+#                u_zoom_fade: [12.25, 13.25]
+
                 
     water-boundaries-animated:
         base: lines
@@ -1206,6 +1248,16 @@ styles:
             uniforms:
                 u_customtexture: images/zig-zag.jpg
                 u_scale: 0.85 
+
+    color-flowers:
+        base: polygons
+        mix: texture
+        shaders:
+            uniforms:
+                u_customtexture: images/color-flowers.jpg
+                u_scale: 0.3  
+#                u_zoom_fade: [12.25, 13.25]
+  
     conservation:
         base: polygons
         mix: texture
